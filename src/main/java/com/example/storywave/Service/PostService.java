@@ -2,6 +2,7 @@ package com.example.storywave.Service;
 
 import com.example.storywave.Dto.BoardDto;
 import com.example.storywave.Dto.CategoryDto;
+import com.example.storywave.Dto.PostDto;
 import com.example.storywave.Dto.PostListDto;
 import com.example.storywave.Entity.Board;
 import com.example.storywave.Entity.Category;
@@ -59,10 +60,17 @@ public class PostService {
                                     category.getName()))
                             .collect(Collectors.toSet());
                     return new PostListDto(
+<<<<<<< HEAD
                             post.getId(),
                             post.getTitle(),
                             post.getUpdated_at(),
                             post.getThumbs(),
+=======
+                                                post.getId(),
+                                                post.getTitle(),
+                                                post.getUpdatedAt(),
+                                                post.getThumbs(),
+>>>>>>> upstream/demo_develope
                             categoryDtos, // 댓글 수를 설정합니다.
                             commentCount // 올바른 타입으로 설정
                     );
@@ -138,6 +146,7 @@ public class PostService {
         return updatedContent.toString();
     }
 
+<<<<<<< HEAD
     private String saveImage(String base64Image, Post post) {
         byte[] imageBytes = Base64.getDecoder().decode(base64Image);
         System.out.println("Decoded image size: " + imageBytes.length + " bytes");
@@ -165,5 +174,13 @@ public class PostService {
             System.err.println("Failed to save image: " + e.getMessage());
             throw new RuntimeException("Failed to save image", e);
         }
+=======
+    // 게시물 상세 조회
+    public PostDto getPostByPostTypeIdAndPostId(Long post_type_id, Long postId) {
+    return postRepository
+            .findByBoard_PostTypeIdAndId(post_type_id, postId)
+            .map(PostDto::fromPost)
+            .orElseThrow(() -> new IllegalArgumentException("포스트를 찾을 수 없습니다."));
+>>>>>>> upstream/demo_develope
     }
 }

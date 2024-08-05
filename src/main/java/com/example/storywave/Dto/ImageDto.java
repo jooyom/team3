@@ -10,14 +10,33 @@ import java.time.LocalDateTime;
 /**
  * DTO for {@link Image}
  */
-@Value
+//@Value
 @NoArgsConstructor(force = true)
 @AllArgsConstructor
 @Getter
 @Setter
+@Builder
 public class ImageDto implements Serializable {
-    Long id;
-    String url;
-    Post post;
-    LocalDateTime uploaded_at;
+    private Long imageId;
+    private String url;
+//    private Post post;
+    private Long postId;
+    private LocalDateTime uploadedAt;
+
+    public static ImageDto fromImage(Image image) {
+        return ImageDto.builder()
+                .imageId(image.getId())
+                .url(image.getUrl())
+                .postId(image.getPost().getId())
+                .uploadedAt(image.getUploaded_at())
+                .build();
+    }
+
+    public Image toImage(){
+        Image image = new Image();
+        image.setId(imageId);
+        image.setUrl(url);
+        image.setUploaded_at(uploadedAt);
+        return image;
+    }
 }

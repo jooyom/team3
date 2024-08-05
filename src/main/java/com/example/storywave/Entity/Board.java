@@ -16,7 +16,10 @@ import java.util.Set;
 public class Board {
 
     @Id
+    @Column(name = "post_type_id")
     private Long postTypeId;
+
+    @Column(name = "view_post")
     private Integer viewPost;
 
     @OneToMany(mappedBy = "board")

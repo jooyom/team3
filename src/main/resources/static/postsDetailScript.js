@@ -36,16 +36,3 @@ function closeCommentModal(){
 document.addEventListener('DOMContentLoaded', (event) => {
     getAllComment();
 });
-
-// thumbs 수 카운트
-function countThumbs(){
-    let hasClicked = false;
-
-    document.getElementById('thumbs_btn').onclick = function () {
-        if (!hasClicked) {
-            const thumbs_num = document.getElementById('thumbs_num');
-            thumbs_num.innerHTML = Number(thumbs_num.innerHTML) + 1;
-            hasClicked = true;
-        }
-    }
-}

@@ -19,6 +19,7 @@ public class Post {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "post_id")
     private Long id;
 
     @ManyToOne
@@ -34,10 +35,11 @@ public class Post {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @Column(updatable = false)
-    private LocalDateTime created_at;
+    @Column(name = "created_at", updatable = false)
+    private LocalDateTime createdAt;
 
-    private LocalDateTime updated_at;
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
     private Integer thumbs;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -51,14 +53,28 @@ public class Post {
     )
     private Set<Category> categories = new HashSet<>(); // Set도 초기화
 
+
     @PrePersist
     protected void onCreate() {
-        created_at = LocalDateTime.now();
-        updated_at = LocalDateTime.now();
+        createdAt = LocalDateTime.now();
+        updatedAt = LocalDateTime.now();
     }
 
     @PreUpdate
     protected void onUpdate() {
-        updated_at = LocalDateTime.now();
+        updatedAt = LocalDateTime.now();
+    }
+
+    @OneToMany(mappedBy = "post")
+    private List<Comment> comments = new ArrayList<>();
+
+    public void addComment(Comment comment) {
+        comments.add(comment);
+        comment.setPost(this);
+    }
+
+    public void removeComment(Comment comment){
+        comments.remove(comment);
+        comment.setPost(null);
     }
 }

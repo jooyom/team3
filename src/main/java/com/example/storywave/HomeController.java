@@ -1,4 +1,4 @@
-package com.ormi.storywave;
+package com.example.storywave;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

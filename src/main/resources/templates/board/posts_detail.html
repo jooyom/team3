@@ -10,7 +10,7 @@
 <body>
 <header>
     <!-- 헤더 -->
-    <h1 class="post_num" style="display: none" th:text="${posts.id}">게시물 상세 보기</h1>
+    <h1 class="post_num" style="display: none" th:text="${posts.postId}">게시물 상세 보기</h1>
     <div class="nav_bar">
         <a class="storywave_logo">
             <img class="storywave_img" src="../../static/photo/StoryWaveLogo.png" alt="홈 화면 이동">
@@ -22,15 +22,19 @@
                 <button id="search_btn"><img class="search_img" src="../../static/photo/search.png" alt="검색 버튼"></button>
             </form>
             <div class="menu_cont2">
+<<<<<<< HEAD
                 <a href="Noticepostlist.html">공지사항</a>
                 <a href="Moviepostlist.html">영화 <span class="menu_detail">리뷰/서평</span></a>
                 <a href="Bookpostlist.html">도서 <span class="menu_detail">리뷰/서평</span></a>
+=======
+                <a th:href="@{/notices}">공지사항</a>
+                <a th:href="@{/movies}">영화 <span class="menu_detail">리뷰/서평</span></a>
+                <a th:href="@{/books}">도서 <span class="menu_detail">리뷰/서평</span></a>
+>>>>>>> upstream/demo_develope
                 <div class="user_menu">
-                    <!--                    <a th:href="@{/mypage.html}" th:text="">마이페이지</a>-->
-                    <a href="../mypage.html">마이페이지</a>
+                    <a>마이페이지</a>
                     <span>|</span>
-                    <!--                    <a th:href="@{/home.html}" th:text="">로그아웃</a>-->
-                    <a href="../home.html">로그아웃</a>
+                    <a th:href="@{/home}">로그아웃</a>
                 </div>
             </div>
         </nav>
@@ -64,7 +68,7 @@
         <p class="post_info">
             <span class="post_user">
                 글쓴이<span th:text="${writer}"></span>
-                날짜<span class="post_create" th:text="${posts.created_at}"></span>
+                날짜<span class="post_create" th:text="${posts.createdAt}"></span>
             </span>
             <span class="post_count">
                 공감<span class="thumbs" th:text="${posts.thumbs}">0</span>
@@ -80,14 +84,14 @@
                 <button id="thumbs_btn" onclick="countThumbs()">
                     <img class="thumbs_img" th:src="@{/photo/Thumb up.png}" alt="">
                 </button>
-            <span id="thumbs_num" th:text="${posts.thumbs}" class="thumbs_num">0</span>
+            <span id="thumbs_num" th:text="${posts.thumbs}" class="thumbs">0</span>
         </span>
     </section>
     <section class="comments_cont">
         <h3 style="display: none">댓글</h3>
         <div class="comments_box">
             <div id="commentList" class="comments">
-                <!--                댓글 데이터가 들어오는 곳입니다-->
+                <!--  댓글 데이터가 들어오는 곳입니다 -->
             </div>
         </div>
         <!-- 삭제 모달-->
@@ -108,6 +112,7 @@
             <div class="updateModal">
                 <label for="modifyContent" style="display: none"></label>
                 <textarea id="modifyContent" name="modifyComment" placeholder="수정할 내용을 입력해주세요"></textarea>
+                <button id="cancel_btn" type="button" onclick="closeModal()">취소</button>
                 <button id="update_btn" type="button" onclick="closeModal()">저장</button>
             </div>
         </div>
@@ -119,7 +124,7 @@
     </section>
 </main>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="/script.js"></script>
+<script src="/postsDetailScript.js"></script>
 <script th:inline="javascript">
     window.onload = () => {
         getAllComment();
@@ -129,7 +134,7 @@
     function getAllComment() {
         console.log("getAllComment 함수 실행")
 
-        const postId = [[${posts.id}]];
+        const postId = [[${posts.postId}]];
         console.log(postId);
 
         $.ajax({
@@ -145,16 +150,24 @@
                 }
 
                 response.forEach((comment) => {
+                    const currentUser = [[${users.userId}]];
+                    const commentUser = comment.userId;
+                    console.log("댓글 유저: ", commentUser);
+                    console.log("접속 유저: ", currentUser);
+
                     commentHtml += `
                         <div class="comment">
                             <span style="display: none">댓글 번호 : ${comment.comment_id}</span>
-                            <span style="display: none">유저 번호 : ${comment.user_id}</span>
                             <span class="nickname_user">${comment.nickname}</span>
                             <p class="content_comment">${comment.content}</p>
-                            <p class="created_comment">${comment.created_at}</p>
+                            <p class="created_comment">${comment.createdAt}</p>
                             <p>
-                                <button type="button" class="modify_comment" onclick="openCommentUpdateModal(${comment.comment_id})">수정</button>
-                                <button type="button" class="remove_comment" onclick="openCommentDeleteModal(${comment.comment_id})">삭제</button>
+                            ${
+                                comment.userId === currentUser ? `
+                                <button type="button" class="modify_comment" onClick="openCommentUpdateModal(${comment.commentId}, '${comment.userId}')">수정</button>
+                                <button type="button" class="remove_comment" onclick="openCommentDeleteModal(${comment.commentId}, '${comment.userId}')">삭제</button>
+                                ` : ' '
+                            }
                             </p>
                         </div>
 
@@ -183,10 +196,10 @@
             return;
         }
 
-        const postId = [[${posts.id}]];
+        const postId = [[${posts.postId}]];
         console.log(postId);
 
-        const userId = [[${users.id}]];
+        const userId = [[${users.userId}]];
         console.log(userId);
 
         const params = {
@@ -214,9 +227,11 @@
     }
 
     // 댓글 수정
-    function openCommentUpdateModal(commentId) {
-        const postId = [[${posts.id}]];
-        const userId = [[${users.id}]];
+    function openCommentUpdateModal(commentId, commentUserId) {
+        const postId = [[${posts.postId}]];
+        const userId = [[${users.userId}]];
+        console.log(userId);
+
         $.ajax({
                 url: `/api/post/${postId}/comments/${commentId}?userId=${userId}`,
                 type: 'GET',
@@ -224,7 +239,8 @@
                 success: function (response) {
                     document.getElementById('modifyContent').value = response.content;
                     document.getElementById('update_btn').setAttribute('onclick', `updateComment(${commentId})`);
-                    openModal();
+                    document.getElementById('cancel_btn').setAttribute('onclick', `closeModal()`);
+                    openModal()
                 },
                 error: function (request, status, error) {
                     console.log(error);
@@ -232,16 +248,17 @@
             }
         )
 
+
     }
 
     function updateComment(commentId) {
         console.log("updateComment 함수 실행")
         const comment = document.getElementById('modifyContent').value;
 
-        const postId = [[${posts.id}]];
+        const postId = [[${posts.postId}]];
         console.log(postId);
 
-        const userId = [[${users.id}]];
+        const userId = [[${users.userId}]];
         console.log(userId);
 
         const params = {
@@ -270,9 +287,9 @@
     }
 
     // 댓글 삭제
-    function openCommentDeleteModal(commentId) {
-        const postId = [[${posts.id}]];
-        const userId = [[${users.id}]];
+    function openCommentDeleteModal(commentId, commentUserId) {
+        const postId = [[${posts.postId}]];
+        const userId = [[${users.userId}]];
 
         $.ajax({
                 url: `/api/post/${postId}/comments/${commentId}?userId=${userId}`,
@@ -294,10 +311,10 @@
 
     function deleteComment(commentId) {
         console.log("deleteComment 함수 실행")
-        const postId = [[${posts.id}]];
+        const postId = [[${posts.postId}]];
         console.log(postId);
 
-        const userId = [[${users.id}]];
+        const userId = [[${users.userId}]];
         console.log(userId);
 
         $.ajax({

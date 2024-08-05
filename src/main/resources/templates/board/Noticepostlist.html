@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
+<<<<<<< HEAD
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>공지사항 게시판</title>
@@ -316,6 +317,322 @@
         const displayIndex = isFixedPost ? '공지' : startIndex + index + 1;
 
         return `
+=======
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>공지사항 게시판</title>
+
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+        body {
+            background-color: #EDE7DF;
+            display: flex;
+            flex-direction: column;
+        }
+        header {
+            display: flex;
+            position: fixed;
+            flex-direction: column;
+            width: 100%;
+            height: 69px;
+            padding: 15px 0;
+            background-color: #EDE7DF;
+            z-index: 10;
+        }
+
+        .nav_bar {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            background-color: #EDE7DF;
+            z-index: 10;
+        }
+
+        a {
+            text-decoration: none;
+            color: black;
+        }
+        h3 {
+            font-size: 10pt;
+        }
+
+        span {
+            font-size: 8pt;
+        }
+        #categroy{
+            font-size: 14pt;
+        }
+
+        .menu_cont {
+            display: flex;
+            flex-direction: column;
+            align-items: end;
+            font-size: 10pt;
+        }
+
+        .storywave_img {
+            height: 85px;
+        }
+
+        .menu_cont2 {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-self: flex-end;
+            padding-top: 28px;
+            gap: 28px;
+        }
+
+        #search-input {
+            padding: 3px 10px;
+            border: none;
+            border-radius: 8px;
+            outline: none;
+            vertical-align: bottom;
+        }
+
+        #search_btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            height: 14px;
+        }
+
+        .search_img {
+            height: 14px;
+        }
+
+        .user_menu {
+            display: flex;
+            align-self: flex-end;
+        }
+
+        .firstLine {
+            display: inline-flex;
+            border-style:solid;
+        }
+
+        .filter-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .category-list li {
+            margin: 5px;
+            display: flex;
+            align-items: center;
+            font-size: 12px;
+        }
+
+        .category-list input[type="checkbox"] {
+            appearance: none;
+            -webkit-appearance: none;
+            outline: none;
+            border: 1px solid #000;
+            border-radius: 4px;
+            width: 15px;
+            height: 15px;
+            background-color: #FFF;
+            position: relative;
+            cursor: pointer;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+
+        .category-list input[type="checkbox"]:checked {
+            background-color: #FFF;
+            border-color: #000;
+        }
+
+        .category-list input[type="checkbox"]:checked::after {
+            content: '✔';
+            color: #000;
+            font-size: 16px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .category-list label {
+            margin-right: 10px;
+        }
+
+        .write-button {
+            background-color: #F9F7F4;
+            color: #000000;
+            border: none;
+            padding: 8px 9px;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            font-size: 12px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border-top: 1px solid #ddd;
+            border-bottom: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+            font-size: 8pt;
+        }
+        th {
+            background-color: #ffffff;
+        }
+
+        tbody tr {
+            background-color: #F9F7F4;
+        }
+
+        tbody tr:hover {
+            background-color: #e0e0e0;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .pagination button {
+            margin: 0 5px;
+            padding: 5px 10px;
+            border: 1px solid #ddd;
+            background-color: #fff;
+            cursor: pointer;
+        }
+
+        main {
+            padding-top: 120px;
+            padding-left: 30px;
+            padding-right: 30px;
+            font-weight: bold;
+
+        }
+        button {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1 style="display: none">스토리웨이브 사이트 홈 화면</h1>
+    <div class="nav_bar">
+        <a class="storywave_logo" href="">
+            <img class="storywave_img" src="/resources/static/photo/StoryWaveLogo.png" alt="홈 화면 이동">
+        </a>
+        <nav class="menu_cont">
+            <form class="search_form">
+                <label for="search-input"></label>
+                <input id="search-input" class="search_box" type="search" name="search_input">
+                <button id="search_btn"><img class="search_img" src="/resources/static/photo/search.png" alt="검색 버튼"></button>
+            </form>
+            <div class="menu_cont2">
+                <a th:href="@{/notices}">공지사항</a>
+                <a th:href="@{/movies}">영화 <span>리뷰/서평</span></a>
+                <a th:href="@{/books}">도서 <span>리뷰/서평</span></a>
+                <div class="user_menu">
+                    <a th:href="@{/join}">회원가입</a>
+                    <span>|</span>
+                    <a th:href="@{/login}">로그인</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <hr class="firstLine">
+</header>
+
+<main>
+    <div class="filter-section">
+        <span id="categroy">공지사항</span>
+        <button class="write-button" onclick="location.href='Noticepostwrite.html'">글쓰기</button>
+    </div>
+    <table class="post-table">
+        <thead>
+        <tr>
+            <th>번호</th>
+            <th>제목</th>
+            <th>글쓴이</th>
+            <th>날짜</th>
+            <th>공감수</th>
+            <th>댓글수</th>
+        </tr>
+        </thead>
+        <tbody id="post-list">
+        <!-- 게시글 목록이 여기 표시 -->
+        <tr th:each="post, iterStat : ${postSummaries}">
+            <td th:text="${iterStat.index + 1}">번호</td>
+            <td><a th:href="@{/posts/{id}(id=${post.id})}" th:text="${post.title}">제목</a></td>
+            <td th:text="${post.author}">글쓴이</td>
+            <td th:text="${#dates.format(post.updated_at, 'yyyy-MM-dd')}">날짜</td>
+            <td th:text="${post.thumbs}">공감수</td>
+            <td th:text="${post.comments}">댓글수</td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="pagination" id="pagination">
+        <!-- 페이지네이션 버튼이 여기 표시 -->
+        <button th:each="pageNum : ${totalPages}"
+                th:text="${pageNum}"
+                th:classappend="${pageNum == currentPage ? 'active' : ''}"
+                th:onclick="'location.href=\'/posts?postTypeId=' + ${postTypeId} + '&page=' + ${pageNum}'">
+        </button>
+    </div>
+</main>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const checkboxes = document.querySelectorAll('.category-list input[type="checkbox"]');
+        const postList = document.getElementById('post-list');
+        const pagination = document.getElementById('pagination');
+        const postsPerPage = 10; // 페이지당 게시글 수
+        let currentPage = 1;
+        let totalPosts = [];
+
+        if (!postList || !pagination) {
+            console.error('Required elements are not found in the DOM');
+            return;
+        }
+
+        // 게시글 데이터 가져오기
+        function fetchPosts() {
+            fetch('http://localhost:8081/post/0')  // 절대경로를 사용하여 요청
+                .then(response => response.json())
+                .then(data => {
+                    // 모든 게시글을 저장
+                    totalPosts = data.sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at));
+                    // 게시글을 표시
+                    displayAllPosts();
+                })
+                .catch(error => console.error('Error fetching posts:', error));
+        }
+
+        // 모든 게시글 표시 함수
+        function displayAllPosts() {
+            const allPostsToDisplay = totalPosts;
+
+            const startIndex = (currentPage - 1) * postsPerPage;
+            const endIndex = startIndex + postsPerPage;
+
+            // 게시글 목록을 슬라이스하여 표시
+            const displayList = allPostsToDisplay.slice(startIndex, endIndex);
+
+            postList.innerHTML = displayList.map((post, index) => {
+                // postTypeId가 0인 경우 '공지'로 표시
+                const isFixedPost = post.categories.some(category => category.board.postTypeId === 0);
+                const displayIndex = isFixedPost ? '공지' : startIndex + index + 1;
+
+                return `
+>>>>>>> upstream/demo_develope
                 <tr>
                     <td>${displayIndex}</td>
                     <td><a href="/post/${post.id}">${post.title}</a></td>
@@ -325,6 +642,7 @@
                     <td>${post.comments}</td>
                 </tr>
             `;
+<<<<<<< HEAD
       }).join('');
 
       displayPagination(allPostsToDisplay.length);
@@ -365,6 +683,48 @@
         const displayIndex = startIndex + index + 1;
 
         return `
+=======
+            }).join('');
+
+            displayPagination(allPostsToDisplay.length);
+        }
+
+        // 게시글 필터링 함수
+        function filterPosts() {
+            const selectedCategories = Array.from(checkboxes)
+                .filter(cb => cb.checked && cb !== allCheckbox)
+                .map(cb => cb.value);
+
+            let filteredPosts = [];
+
+            if (selectedCategories.length === 0) {
+                // 모든 카테고리의 게시글을 가져옴
+                filteredPosts = totalPosts;
+            } else {
+                // 선택된 카테고리의 게시글만 필터링
+                filteredPosts = totalPosts.filter(post =>
+                    post.categories.some(category => selectedCategories.includes(category.name))
+                );
+            }
+
+            // 초기 페이지 설정
+            currentPage = 1;
+            displayFilteredPosts(filteredPosts);
+        }
+
+        // 필터링된 게시글 목록 표시 함수
+        function displayFilteredPosts(filteredPosts) {
+            const startIndex = (currentPage - 1) * postsPerPage;
+            const endIndex = startIndex + postsPerPage;
+
+            // 게시글 목록을 슬라이스하여 표시
+            const displayList = filteredPosts.slice(startIndex, endIndex);
+
+            postList.innerHTML = displayList.map((post, index) => {
+                const displayIndex = startIndex + index + 1;
+
+                return `
+>>>>>>> upstream/demo_develope
                 <tr>
                     <td>${displayIndex}</td>
                     <td><a href="/post/${post.id}">${post.title}</a></td>
@@ -374,6 +734,7 @@
                     <td>${post.comments}</td>
                 </tr>
             `;
+<<<<<<< HEAD
       }).join('');
 
       displayPagination(filteredPosts.length);
@@ -406,3 +767,37 @@
 </script>
 </body>
 </html>
+=======
+            }).join('');
+
+            displayPagination(filteredPosts.length);
+        }
+
+        // 페이지네이션 표시 함수
+        function displayPagination(totalPostsToDisplay) {
+            const totalPages = Math.ceil(totalPostsToDisplay / postsPerPage);
+            pagination.innerHTML = '';
+
+            for (let i = 1; i <= totalPages; i++) {
+                const button = document.createElement('button');
+                button.textContent = i;
+                button.className = i === currentPage ? 'active' : '';
+                button.addEventListener('click', () => {
+                    currentPage = i;
+                    if (totalPostsToDisplay === totalPosts.length) {
+                        displayAllPosts();
+                    } else {
+                        filterPosts();
+                    }
+                });
+                pagination.appendChild(button);
+            }
+        }
+
+        // 초기 게시글 데이터 가져오기
+        fetchPosts();
+    });
+</script>
+</body>
+</html>
+>>>>>>> upstream/demo_develope

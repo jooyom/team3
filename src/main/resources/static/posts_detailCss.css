@@ -280,7 +280,7 @@ h3 {
     padding: 19px 10px;
 }
 
-#comment_btn, #update_btn {
+#comment_btn, #update_btn, #cancel_btn {
     width: 70px;
     height: 33px;
     color: black;

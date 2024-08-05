@@ -2,6 +2,9 @@ package com.example.storywave.Entity;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
 import lombok.*;
 @Entity
 @NoArgsConstructor
@@ -12,7 +15,8 @@ import lombok.*;
 public class User {
 
     @Id
-    private String user_id;
+    @Column(name = "user_id")
+    private String userId;
 
     @Column(nullable = false)
     private String username;
@@ -23,22 +27,57 @@ public class User {
     private String nickname;
     private String email;
     private String role;
-    private String active_status;
+    @Column(name = "active_status")
+    private String activeStatus;
 
-    @Column(updatable = false)
-    private LocalDateTime created_at;
+    @Column(name = "created_at", updatable = false)
+    private LocalDateTime createdAt;
 
-    private LocalDateTime updated_at;
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
 
     @PrePersist
     protected void onCreate() {
-        created_at = LocalDateTime.now();
-        updated_at = LocalDateTime.now();
+        createdAt = LocalDateTime.now();
+        updatedAt = LocalDateTime.now();
     }
 
     @PreUpdate
     protected void onUpdate() {
-        updated_at = LocalDateTime.now();
+        updatedAt = LocalDateTime.now();
+    }
+
+    @Column
+    @OneToMany(mappedBy = "user")
+    private List<Comment> comments = new ArrayList<>();
+
+    @Column
+    @OneToMany(mappedBy = "user")
+    private List<Post> posts = new ArrayList<>();
+
+
+    // 유저 댓글 목록 관리
+    public void addComment(Comment comment) {
+        comments.add(comment);
+        comment.setUser(this);
+    }
+
+    // 유저 댓글 목록 관리
+    public void removeComment(Comment comment){
+        comments.remove(comment);
+        comment.setUser(null);
+    }
+
+    // 유저 포스트 목록 관리
+    public void addPost(Post post){
+        posts.add(post);
+        post.setUser(this);
+    }
+
+    // 유저 포스트 목록 관리
+    public void removePost(Post post){
+        posts.remove(post);
+        post.setUser(null);
     }
 
 }

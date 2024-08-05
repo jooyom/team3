@@ -1,19 +1,33 @@
 package com.example.storywave.Entity;
-
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+//@Value
 @Entity
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
+@Table(name = "comments")
 @Getter
 @Setter
-@Table(name = "comments")
 public class Comment {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "comment_id")
+    private Long commentId;
+
+    @Column
+    private String content;
+
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
+
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
 
     @ManyToOne
     @JoinColumn(name = "post_id")
@@ -21,13 +35,7 @@ public class Comment {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private User user_id;
+    private User user;
 
-    @Lob
-    private String content;
-
-    @Column(updatable = false)
-    private LocalDateTime created_at;
-
-    private LocalDateTime updated_at;
 }
+
